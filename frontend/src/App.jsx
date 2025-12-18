@@ -1,20 +1,13 @@
 import { useState } from 'react'
+import axios from 'axios'
 import InputField from './components/inputField.jsx'
 import './App.css'
 
 async function Print(formData){
-	const response = await fetch(
-		'localhost:3000',{
-			method: 'POST',
-			headers: {
-				'User-Agent': 'undici-stream-example',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				firstName: formData.get('firstName'),
-			}),
-		}
-	);
+	const url = 'http://localhost:3000'
+	axios.get(url).then((res)=>{console.log(res)})
+		.catch((error)=>{console.log(error)})
+
 }
 function App() {
 	//const [count, setCount] = useState(0)
@@ -28,6 +21,7 @@ function App() {
 				<InputField dataType="reason" label="Reason"/>
 				<button type="submit">Submit</button>
 			</form>
+			<button type='button' onClick={Print}>test response</button>
 		</>
 	)
 }

@@ -45,7 +45,12 @@ function main(){
 	const port=3000;
 
 	const server = createServer((req, res) =>{
-		res.statusCode= 200;
+		res.writeHead(200,{
+			'access-control-allow-origin': '*',
+		});
+		res.end('ok');
+		console.log('data sent')
+		console.log(req.headers);
 	});
 
 	server.listen(port, hostName, () =>{
