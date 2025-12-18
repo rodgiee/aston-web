@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import axios from 'axios'
 import InputField from './components/inputField.jsx'
 import './App.css'
 
 async function Print(formData){
 	const url = 'http://localhost:3000'
-	axios.get(url).then((res)=>{console.log(res)})
-		.catch((error)=>{console.log(error)})
+	fetch(url).then((response)=>{console.log(response)})
+		.catch((error=>{console.log(error)}))
 
 }
 function App() {
