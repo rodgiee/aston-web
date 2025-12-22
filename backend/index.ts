@@ -36,8 +36,6 @@ async function appendFormData(){
 			values: values
 		}
 	});
-	console.log(writeResponse);
-
 }
 
 function main(){
@@ -45,20 +43,34 @@ function main(){
 	const port : number = 3000;
 
 	const server = createServer((req, res) =>{
+
+		// RESPONSE
 		res.writeHead(200,{
 			'access-control-allow-origin': '*',
 		});
+
+		// Signal that the message is complete and send
 		res.end('ok');
 		console.log('data sent')
-		console.log(req.headers);
+
+
+		interface Message{
+			message: string;
+		}
+
+		// REQUEST
+		let incomingRequestBody =  ""
+		req.on('data', chunk=>{incomingRequestBody+=chunk.toString()})
+		req.on('end', ()=>{
+			const parsedBody : Message = JSON.parse(incomingRequestBody)
+			console.log(parsedBody.message);
+		})
 	});
 
 	server.listen(port, hostName, () =>{
 		console.log('server is listening');
 	})
-
 }
 
-appendFormData()
 main();
 

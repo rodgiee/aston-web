@@ -3,8 +3,16 @@ import './App.css'
 
 async function Print(formData : FormData){
 	const url = 'http://localhost:3000'
-	fetch(url).then((response)=>{console.log(response)})
-		.catch((error=>{console.log(error)}))
+	const body = {
+		message: "hello world!"
+	}
+
+	fetch(url, {
+		method: 'POST',
+		body: JSON.stringify(body),
+	}).then(response=>console.log(response))
+
+	
 
 }
 function App() {
