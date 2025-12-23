@@ -7,7 +7,7 @@ const RANGE = 'MAIN!A2:D1000';
 const CREDENTIALS = path.join(process.cwd(), '.credentials.json');
 const SHEETID = process.env.SHEETID;
 
-async function appendFormData(){
+async function appendFormData(rowEntry : Array<string>){
 
 	// Authenticate/Identify self 
 	const auth = new google.auth.GoogleAuth({
@@ -21,19 +21,12 @@ async function appendFormData(){
 		auth,
 	});
 
-	const values = [[
-		'rodge',
-		'rebeca',
-		'rodgerebeca@gmail.com',
-		'just testing!',
-	]];
-
 	const writeResponse = googleSheets.spreadsheets.values.append({
 		spreadsheetId: SHEETID,
 		range:RANGE,
 		valueInputOption:'RAW',
 		requestBody: {
-			values: values
+			values: [rowEntry]
 		}
 	});
 }
@@ -54,17 +47,18 @@ function main(){
 		console.log('data sent')
 
 
-		interface Message{
-			message: string;
-		}
 
 		// REQUEST
 		let incomingRequestBody =  ""
 		req.on('data', chunk=>{incomingRequestBody+=chunk.toString()})
 		req.on('end', ()=>{
-			const parsedBody : Message = JSON.parse(incomingRequestBody)
-			console.log(parsedBody.message);
+			const parsedBody = JSON.parse(incomingRequestBody)
+
+
+			appendFormData(Object.values(parsedBody))
 		})
+
+
 	});
 
 	server.listen(port, hostName, () =>{
