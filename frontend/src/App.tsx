@@ -13,14 +13,14 @@ async function formSubmit(formData : FormData){
 	const bodyMessage : RowEntry = {
 		firstName: formData.get('firstName'),
 		lastName: formData.get('lastName'),
-		email: formData.get('lastName'),
+		email: formData.get('email'),
 		description: formData.get('description'),
 	}
 
 
 	const url = 'http://localhost:3000'
 
-	fetch(url, {
+	await fetch(url, {
 		method: 'POST',
 		body: JSON.stringify(bodyMessage),
 	}).then(response=>console.log(response))
