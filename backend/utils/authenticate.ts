@@ -10,5 +10,6 @@ export function authenticateKey(scope : Array<string>){
 		scopes: scope,
 	});
 
+
 	return auth
 }
