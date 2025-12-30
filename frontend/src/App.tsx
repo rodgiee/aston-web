@@ -1,16 +1,10 @@
+import type {FormSubmission} from '../../interface.ts'
 import InputField from './components/inputField.tsx'
 import './App.css'
 
-interface RowEntry {
-	firstName: FormDataEntryValue | null,
-	lastName: FormDataEntryValue | null,
-	email: FormDataEntryValue | null,
-	description: FormDataEntryValue | null,
-}
-
 async function formSubmit(formData : FormData){
 
-	const bodyMessage : RowEntry = {
+	const bodyMessage : FormSubmission = {
 		firstName: formData.get('firstName'),
 		lastName: formData.get('lastName'),
 		email: formData.get('email'),

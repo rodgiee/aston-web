@@ -1,5 +1,7 @@
+import type {FormSubmission} from '../interface.ts'
 import { createServer } from 'node:http'; 
 import {appendFormData} from './utils/append_form_data.ts'
+import {sendMailData} from './utils/send_mail_data.ts'
 
 function main(){
 	const hostName : string = 'localhost';
@@ -21,10 +23,19 @@ function main(){
 		let incomingRequestBody =  ""
 		req.on('data', chunk=>{incomingRequestBody+=chunk.toString()})
 		req.on('end', ()=>{
-			const parsedBody = JSON.parse(incomingRequestBody)
+			// Take completed string into JSON
+			const incomingParsedBody = JSON.parse(incomingRequestBody)
+
+			const incomingFormSubmission : FormSubmission = {
+				firstName: incomingParsedBody.firstName,
+				lastName: incomingParsedBody.lastName,
+				email: incomingParsedBody.email,
+				description: incomingParsedBody.description,
+			}
 
 			// Pass form data as an array of strings
-			appendFormData(Object.values(parsedBody))
+			appendFormData(incomingFormSubmission)
+			sendMailData(incomingFormSubmission)
 		})
 
 
